@@ -23,3 +23,4 @@ org-mode的链接默认用回车键不能打开，需要设置`(setq org-return-
 orgcms首页用的是表格，目前使用 [自定义链接](https://emacs-china.org/t/org-mode-org-mode/15847/18) 来解决这个问题
 
 参考 https://emacs-china.org/t/org-mode-org-mode/15847
+    https://emacs-china.org/t/org-mode/18983
