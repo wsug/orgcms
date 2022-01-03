@@ -1,16 +1,22 @@
 ;; ---- ---- ---- ---- orgcms的异步http版本
 (defvar orgcms-buffer-name ""
   "debug时保存当前buffer-name的位置输出" )
+(defvar orgcms-user "游客" "用户名" )
+(defvar orgcms-pw "" "密码" );;(setq orgcms-pw "-")
 ;;;###autoload  
 (defun orgcms-load(url &optional org-text args)
   "post形式发送"
   (setq orgcms-buffer-name (buffer-name));;不发送到web后端的 debug时用
-  (setq args (format "buffer=%s" (url-hexify-string orgcms-buffer-name)))
+  (setq args 
+        (format
+         "buffer=%s&user=%s&pw=%s" (url-hexify-string orgcms-buffer-name)
+        (url-hexify-string orgcms-user) (url-hexify-string orgcms-pw)
+        ))
   (if (equal org-text 1)
       ;;(plist-put args 'org (buffer-string))
       (setq args (concat args (format "&org=%s" (orgcms-get-text))))
     )
-  ;;(message "%s" args)
+  (message "%s" args)
   (let ((url-request-method "POST")
 	    (url-request-extra-headers `(("Content-Type" . "application/x-www-form-urlencoded")))
         (url-request-data args)
