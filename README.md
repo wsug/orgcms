@@ -20,8 +20,8 @@ org-mode的配置文件参考 [org-conf.el](//github.com/wsug/orgcms/blob/main/o
 
 org-mode的链接默认用回车键不能打开，需要设置`(setq org-return-follows-link nil)`，但这个设置对org表格里的链接无效。
 
-orgcms首页用的是表格，目前使用 [自定义链接](https://emacs-china.org/t/org-mode-org-mode/15847/18) 来解决这个问题
+orgcms首页用的是表格，目前使用 [自定义链接](https://emacs-china.org/t/org-mode-org-mode/15847/18) 来解决这个问题。
 
-参考 [以org-mode为前端的内容管理系统](https://emacs-china.org/t/org-mode-org-mode/15847)  ， [以org-mode写成的经典中文文章](https://emacs-china.org/t/org-mode/18983)
+参考 [以org-mode为前端的内容管理系统](https://emacs-china.org/t/org-mode-org-mode/15847)  ； [以org-mode写成的经典中文文章](https://emacs-china.org/t/org-mode/18983) ；
     
 感谢emacs中文论坛中热心回复过我贴子的所有用户！
