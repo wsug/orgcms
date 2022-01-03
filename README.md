@@ -12,7 +12,7 @@ emacs里的org-mode仍然是独一无二的，但是org-mode缺少一些在浏�
 
 4，点击这个首页按钮即进入orgcms的首页
 # 注意事项
-org-mode的配置文件参考 //github.com/wsug/orgcms/blob/main/org-conf.el 这个文件
+org-mode的配置文件参考 [org-conf.el](//github.com/wsug/orgcms/blob/main/org-conf.el) 这个文件
 
 因为是采用在org-mode中运行elisp代码实现的，需要设置 `(setq org-link-elisp-confirm-function nil)` 否则总是弹出窗口会影响体验。
 
