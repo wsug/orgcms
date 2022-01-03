@@ -24,6 +24,7 @@ orgcms首页用的是表格，目前使用 [自定义链接](https://emacs-china
 
 参考 
     [以org-mode为前端的内容管理系统](https://emacs-china.org/t/org-mode-org-mode/15847)
+    
     [以org-mode写成的经典中文文章](https://emacs-china.org/t/org-mode/18983)
     
 感谢emacs中文论坛中热心回复过我贴子的所有用户！
