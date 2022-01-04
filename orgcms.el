@@ -1,16 +1,20 @@
+
 ;; ---- ---- ---- ---- orgcms的异步http版本
 (defvar orgcms-buffer-name ""
   "debug时保存当前buffer-name的位置输出" )
 (defvar orgcms-user "游客" "用户名" )
 (defvar orgcms-pw "" "密码" );;(setq orgcms-pw "-")
+(defvar orgcms-cookieId "" "sessionId" );;
 ;;;###autoload  
 (defun orgcms-load(url &optional org-text args)
   "post形式发送"
   (setq orgcms-buffer-name (buffer-name));;不发送到web后端的 debug时用
   (setq args 
         (format
-         "buffer=%s&user=%s&pw=%s" (url-hexify-string orgcms-buffer-name)
-        (url-hexify-string orgcms-user) (url-hexify-string orgcms-pw)
+         "buffer=%s&user=%s&pw=%s&cookieId=%s" 
+         (url-hexify-string orgcms-buffer-name)
+         (url-hexify-string orgcms-user) (url-hexify-string orgcms-pw)
+         orgcms-cookieId
         ))
   (if (equal org-text 1)
       ;;(plist-put args 'org (buffer-string))
@@ -33,7 +37,6 @@
 (defun orgcms-http-parse()
   "解析服务器端返回的"
   ;(set-buffer-multibyte t);这个无法消除
-
   ;;(re-search-forward "^$")(delete-region (+ (point) 1)(point-min));原办法
   ;;(let (my-pos (point))) my-pos 页面刷新后保持原位置可能实现
   (forward-line 1);;第一行http状态码用不到
@@ -42,9 +45,11 @@
     (while (re-search-forward "^\\([^:]*\\): \\(.+\\)"
                               url-http-end-of-headers t)
       (cond ((equal "Buffer" (match-string 1))
-             (progn (setq org-buf (match-string 2))))
+             (setq org-buf (match-string 2)))
             ((equal "Message" (match-string 1))
-             (progn (setq msg-con (match-string 2))))            
+             (setq msg-con (match-string 2)))
+            ((equal "CookieId" (match-string 1))
+             (setq orgcms-cookieId (match-string 2)))
             ((equal "Ready" (match-string 1))
              (progn (setq ready (split-string (match-string 2) " ")) ))
             ) )
@@ -111,31 +116,34 @@
 ;; ---- ---- ---- ---- 按键设置
 ;;使org中的链接可以回车打开,在表格无效,改成用自定义链接
 ;;(setq org-return-follows-link nil);
-(org-link-set-parameters
- "elisp"
- :keymap (let ((map (copy-keymap org-mouse-map)))
-           (define-key map (kbd "<return>") 'org-open-at-point)
-           (define-key map (kbd "<kp-enter>") 'org-open-at-point)
-           ;;(define-key map (kbd "<mouse-3>");光标不在当前buffer点时会错乱 不能用
+(with-eval-after-load 'org
+  (org-link-set-parameters
+   "elisp"
+   :keymap (let ((map (copy-keymap org-mouse-map)))
+             (define-key map (kbd "<return>") 'org-open-at-point)
+             (define-key map (kbd "<kp-enter>") 'org-open-at-point)
+             ;;(define-key map (kbd "<mouse-3>");光标不在当前buffer点时会错乱 不能用
              ;;(lambda () (interactive) (orgcms-link-open-other-window) ))
-           ;;(define-key map (kbd "O")
+             ;;(define-key map (kbd "O")
              ;;(lambda () (interactive) (orgcms-link-open-other-window) ))
-           (define-key map (kbd "M-o")
-             (lambda () (interactive) (orgcms-link-open-other-window 1) ))
-           (define-key map (kbd "W")
-             (lambda () (interactive)
-               (let* ((context (org-element-context))
-                      (type (org-element-type context))
-                      (beg (org-element-property :begin context))
-                      (end (org-element-property :end context)))
-                 (kill-region beg end)  )))
-
-           map)
- :follow (lambda (path) ;;防止elisp链接点击时弹出的消息把minibuf加得太大
-           (interactive);;max-mini-window-height
-           (let (message-truncate-lines)
-             (setq message-truncate-lines t)
-             ;;(setq max-mini-window-height 1)
-             (org-link--open-elisp path nil)
-             ;(message "")
-             )))
+             (define-key map (kbd "M-o")
+               (lambda () (interactive) (orgcms-link-open-other-window 1) ))
+             (define-key map (kbd "W")
+               (lambda () (interactive)
+                 (let* ((context (org-element-context))
+                        (type (org-element-type context))
+                        (beg (org-element-property :begin context))
+                        (end (org-element-property :end context)))
+                   (kill-region beg end)  )))
+             
+             map)
+   :follow (lambda (path) ;;防止elisp链接点击时弹出的消息把minibuf加得太大
+             (interactive);;max-mini-window-height
+             (let (message-truncate-lines)
+               (setq message-truncate-lines t)
+               ;;(setq max-mini-window-height 1)
+               (org-link--open-elisp path nil)
+                                        ;(message "")
+               )))
+  )
+(provide 'orgcms)
