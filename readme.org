@@ -11,6 +11,7 @@ emacs里的org-mode仍然是独一无二的，但是org-mode缺少一些在浏�
 3，打开任意一个org文件(没有重要内容的)，输入 \[[elisp:(orgcms-load "http://localhost/org")][首 页]\]
 
 4，点击这个首页按钮即进入orgcms的首页
+* TODO 服务器端代码 开发中
 
 * 注意事项
 org-mode的配置文件参考 [org-conf.el](//github.com/wsug/orgcms/blob/main/org-conf.el) 这个文件
