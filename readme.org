@@ -15,8 +15,6 @@ emacs里的org-mode仍然是独一无二的，但是org-mode缺少一些在浏�
 
 当前测试服务器ip为39.104.176.80, 还不能投入使用(bug太多)，只能参观一下 \[[elisp:(orgcms-load "http://39.104.176.80")][首 页]\]
 
-[[https://raw.githubusercontent.com/wsug/orgcms/org/img/demo1.gif][演示图片]]
-
 #+html: <p align="center"><img src="https://raw.githubusercontent.com/wsug/orgcms/org/img/demo1.gif" /></p>
 
 * 注意事项
