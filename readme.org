@@ -13,6 +13,10 @@ emacs里的org-mode仍然是独一无二的，但是org-mode缺少一些在浏�
 4，点击这个首页按钮即进入orgcms的首页
 * TODO 服务器端代码 开发中
 
+当前测试服务器ip为39.104.176.80, 还不能投入使用(bug太多)，只能参观一下 \[[elisp:(orgcms-load "http://39.104.176.80")][首 页]\]
+
+[[https://raw.githubusercontent.com/wsug/orgcms/org/img/demo1.gif][演示图片]]
+
 * 注意事项
 org-mode的配置文件参考 [org-conf.el](//github.com/wsug/orgcms/blob/main/org-conf.el) 这个文件
 
