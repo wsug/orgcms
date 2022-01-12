@@ -20,7 +20,7 @@
       ;;(plist-put args 'org (buffer-string))
       (setq args (concat args (format "&org=%s" (orgcms-get-text))))
     )
-  (message "%s" args)
+  ;;(message "%s" args)
   (let ((url-request-method "POST")
 	    (url-request-extra-headers `(("Content-Type" . "application/x-www-form-urlencoded")))
         (url-request-data args)
@@ -64,7 +64,7 @@
           ;;(eval (car (read-from-string (format "(progn %s)" ready))))
           (save-buffer);;有revert存在必须先save在执行
           (orgcms-load-end (string-to-number (car ready)) (nth 1 ready))
-          (message (decode-coding-string msg-con 'utf-8-auto-dos))
+          (message (decode-coding-string msg-con 'utf-8-auto-dos));服务器端的提示
         )
       ))
   )
