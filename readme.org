@@ -36,4 +36,4 @@ orgcms首页用的是表格，目前使用 [[https://emacs-china.org/t/org-mode-
 
 如果你对这种org-mode的使用方式感兴趣，可以给作者打赏，作者把你的用户名，密码也加进去，方便创建编辑文章。
 
-#+html: <p align="center"><img src="//github.com/wsug/orgcms/raw/org/img/alipay.jpg" /></p>
+#+html: <p align="center"><img src="https://raw.githubusercontent.com/wsug/orgcms/org/img/alipay.jpg" /></p>
