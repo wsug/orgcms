@@ -8,14 +8,14 @@ emacs里的org-mode仍然是独一无二的，但是org-mode缺少一些在浏�
 
 2，执行 (require 'orgcms) 或者 (require 'orgcms-autoloads) 
 
-3，打开任意一个org文件(没有重要内容的)，输入 \[[elisp:(orgcms-load "http://localhost/org")][首 页]\],其中localhost/org更改为实际服务器端地址
+3，打开任意一个org文件(没有重要内容的)，输入 =[[elisp:(orgcms-load "http://localhost/org")][首 页]]=,其中localhost/org更改为实际服务器端地址
 
 4，点击这个首页按钮即进入orgcms的首页
 
 5，用户名密码设置 =(setq orgcms-user "wsug")(setq orgcms-pw "987654321")= 如不设置，默认为游客
 * TODO 服务器端代码 开发中
 
-当前测试服务器ip为39.104.176.80, 还不能投入使用(bug太多)，只能参观一下 \[[elisp:(orgcms-load "http://39.104.176.80")][首 页]\]
+当前测试服务器ip为39.104.176.80, 还不能投入使用(bug太多)，只能参观一下 =[[elisp:(orgcms-load "http://39.104.176.80")][首 页]]=
 
 #+html: <p align="center"><img src="https://raw.githubusercontent.com/wsug/orgcms/org/img/demo1.gif" /></p>
 
