@@ -17,6 +17,8 @@ emacs里的org-mode仍然是独一无二的，但是org-mode缺少一些在浏�
 
 [[https://raw.githubusercontent.com/wsug/orgcms/org/img/demo1.gif][演示图片]]
 
+#+html: <p align="center"><img src="https://raw.githubusercontent.com/wsug/orgcms/org/img/demo1.gif" /></p>
+
 * 注意事项
 org-mode的配置文件参考 [org-conf.el](//github.com/wsug/orgcms/blob/main/org-conf.el) 这个文件
 
@@ -31,3 +33,4 @@ orgcms首页用的是表格，目前使用 [自定义链接](https://emacs-china
 参考 [以org-mode为前端的内容管理系统](https://emacs-china.org/t/org-mode-org-mode/15847)  ； [以org-mode写成的经典中文文章](https://emacs-china.org/t/org-mode/18983) ；
     
 感谢emacs中文论坛中热心回复过我贴子的所有用户！
+
