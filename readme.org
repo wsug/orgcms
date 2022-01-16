@@ -22,7 +22,7 @@ emacs里的org-mode仍然是独一无二的，但是org-mode缺少一些在浏�
 #+html: <p align="center"><img src="https://raw.githubusercontent.com/wsug/orgcms/org/img/demo1.gif" /></p>
 * 已知问题
 
-swiper在搜索org文件时不能 [[//github.com/abo-abo/swiper/issues/2910][只搜索页面可见内容]] ，在org文件不链接不多的情况下，这样也不影响，但org文件链接比较多时就不太友好了，目前解决办法是使用emacs自带的搜索 =isearch=。
+swiper在搜索org文件时不能 [[//github.com/abo-abo/swiper/issues/2910][只搜索页面可见内容]] ，在org文件不链接不多的情况下，这样也不影响，但org文件链接比较多时就不太友好了，目前解决办法是使用emacs自带的搜索 =isearch= 。
 
 * 注意事项
 org-mode的配置文件参考 [[//github.com/wsug/orgcms/blob/main/org-conf.el][org-conf.el]] 这个文件
