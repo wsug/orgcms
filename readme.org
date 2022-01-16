@@ -4,6 +4,7 @@ orgcms的目标是实现像使用网页应用一样使用org-mode,因为作者�
 emacs里的org-mode仍然是独一无二的，但是org-mode缺少一些在浏览器中才有的交互性功能，就想在org-mode中将其实现。
 
 使用：
+
 1，下载 orgcms.el文件放到emacs可找到的位置，如~/.emacs.d/lisp/orgcms.el
 
 2，执行 (require 'orgcms) 或者 (require 'orgcms-autoloads) 
@@ -13,11 +14,15 @@ emacs里的org-mode仍然是独一无二的，但是org-mode缺少一些在浏�
 4，点击这个首页按钮即进入orgcms的首页
 
 5，用户名密码设置 =(setq orgcms-user "wsug")(setq orgcms-pw "987654321")= 如不设置，默认为游客
+
 * TODO 服务器端代码 开发中
 
 当前测试服务器ip为39.104.176.80, 还不能投入使用(bug太多)，只能参观一下 =[[elisp:(orgcms-load "http://39.104.176.80")][首 页]]=
 
 #+html: <p align="center"><img src="https://raw.githubusercontent.com/wsug/orgcms/org/img/demo1.gif" /></p>
+* 已知问题
+
+swiper在搜索org文件时能不能 [[只搜索页面可见内容][//github.com/abo-abo/swiper/issues/2910]] ，在org文件不链接不多的情况下，这样也不影响，但org文件链接比较多时就不太友好了，目前解决办法是使用emacs自带的搜索 =isearch=。
 
 * 注意事项
 org-mode的配置文件参考 [[//github.com/wsug/orgcms/blob/main/org-conf.el][org-conf.el]] 这个文件
@@ -35,5 +40,6 @@ orgcms首页用的是表格，目前使用 [[https://emacs-china.org/t/org-mode-
 感谢emacs中文论坛中热心回复过我贴子的所有用户！
 
 如果你对这种org-mode的使用方式感兴趣，可以给作者打赏，作者把你的用户名，密码也加进去，方便创建编辑文章。
+
 
 #+html: <p align="center"><img src="https://raw.githubusercontent.com/wsug/orgcms/org/img/pay-ali.jpg" /></p>
