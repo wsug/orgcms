@@ -72,7 +72,7 @@
 (defun orgcms-load-end(row &optional type )
   "org文件加载完成后的位置调整 ";;传入行号与操作类型
   (or type (setq type ""))
-  (next-line row)(org-end-of-line)
+  (goto-line row)(org-end-of-line)
   (cond 
    ((equal type "table")
     (progn (org-cycle)))
