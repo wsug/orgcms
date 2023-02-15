@@ -40,7 +40,7 @@
   ;;(re-search-forward "^$")(delete-region (+ (point) 1)(point-min));原办法
   ;;(let (my-pos (point))) my-pos 页面刷新后保持原位置可能实现
   (forward-line 1);;第一行http状态码用不到
-  (let ( org-buf (ready '("3" "table") ) body msg-con save-silently)
+  (let ( org-buf (ready '("4" "table") ) body msg-con save-silently)
     (setq save-silently t);save-buffer执行时不出现提示
     (while (re-search-forward "^\\([^:]*\\): \\(.+\\)"
                               url-http-end-of-headers t)
