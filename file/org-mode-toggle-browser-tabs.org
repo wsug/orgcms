@@ -1,7 +1,7 @@
 #+title: org-mode-toggle-browser-tabs
 这是在emacs-china论坛帖子 https://emacs-china.org/t/emacs/26371/9 的相关代码
 
-代码分三个部分,浏览器扩展后台脚本的background.js 文件, php的browser-tabs.php文件和 u.php文件(短网址跳转) 和一个elisp函数
+代码分四个部分,浏览器扩展后台脚本的background.js 文件, php的browser-tabs.php文件和 u.php文件(短网址跳转) 和一个elisp函数
 * background.js 文件
 #+BEGIN_SRC js
 chrome.tabs.onCreated.addListener(function(tab) {
