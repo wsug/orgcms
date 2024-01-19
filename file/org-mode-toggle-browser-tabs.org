@@ -1,0 +1,118 @@
+#+title: org-mode-toggle-browser-tabs
+这是在emacs-china论坛帖子 https://emacs-china.org/t/emacs/26371/9 的相关代码
+
+代码分三个部分,浏览器扩展后台脚本的background.js 文件, php的browser-tabs.php文件和 u.php文件(短网址跳转) 和一个elisp函数
+* background.js 文件
+#+BEGIN_SRC js
+chrome.tabs.onCreated.addListener(function(tab) {
+  //console.log("newTab:", tab);
+  //console.log("tabid:"+tab.pendingUrl.substr(-6));
+  if(tab.pendingUrl.substr(7,6)=="tabid="){//如果域名是tabid=开头则跳转
+    let tabid=parseInt( tab.pendingUrl.substr(13) );//取出要跳转的tabid
+    //console.log(tabid);
+    chrome.tabs.update(tabid,{ active: true });
+    chrome.tabs.remove(tab.id);//关闭当前页面
+  }else if(tab.pendingUrl.substr(7,11)=="closetabid="){
+    let tabid=parseInt( tab.pendingUrl.substr(18) );//取出要关闭的tabid
+    chrome.tabs.remove(tab.id);//关闭当前页
+    chrome.tabs.remove(tabid);//关闭指定页
+  }
+});
+var $tabs_up_time=0;
+chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
+  if (changeInfo.url) {//打开一个页面默认会触发三次
+    if((Date.parse(new Date())/1000)-$tabs_up_time>4){//每次发起请求至少间隔4s
+      chrome.tabs.query({ currentWindow: true },function(tabs){
+        var urls = [];
+        var urlStr="";
+        for (var i = 0; i < tabs.length; i++) {
+          // if(i==1){ //   console.log(tabs[0]); // }
+          urls.push([tabs[i].id,tabs[i].url,tabs[i].title]);
+        }
+        //console.log(urls);
+        file_get_content("http://127.0.0.1/browser-tabs",urls);
+      });
+      $tabs_up_time=(Date.parse(new Date())/1000);
+    }else{
+      console.log("< 4s");
+    }
+  }
+});
+function file_get_content(url,post){//仿php
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type':'application/json',
+    },
+    body:JSON.stringify(post),
+  })//.then(res => {  //console.log(res.json());
+    .then(data => {
+      //console.log(data);
+    });
+}
+
+#+END_SRC
+* browser-tabs.php文件
+#+BEGIN_SRC php
+global $_urls;
+$_urls=array();
+$json=file_get_contents('php://input');#获取http post json传过来的数据
+if(substr($json,0,2)=="[["){#]]
+  $org="#+STARTUP: nofold\n";
+  foreach(json_decode($json,1) as $v){
+    $org.=arr_to_org_link($v);
+  }
+  file_put_contents(__DIR__."/browser-tabs.org",$org);
+  file_put_contents(__DIR__."/browser-urls.json", json_encode($_urls,JSON_UNESCAPED_UNICODE) );
+}else{
+  file_put_contents(__DIR__."/browser-tabs.org","no post");
+}
+function arr_to_org_link(array $v){
+  $firefox="d:/9/client/firefox/firefox.exe";
+  $chrome="\\\"C:/Program Files/Google/Chrome/Application/chrome.exe\\\"";
+  $host=explode("//",$v[1],2)[1];
+  #$host=explode("/",$host,2)[0];
+  $host=substr($host,0,36);
+  $url=long_url_to($v[1],$v[0]);
+  $r='* [[elisp:(orgcms-shell-timeout-revert "'.$chrome.' closeTabid='.$v[0].'")][closeTAB!]]';
+  $r.=' [[elisp:(orgcms-shell-timeout-revert "'.$chrome.' tabid='.$v[0].'")][toggleTAB]]';
+  $r.=' [[elisp:(orgcms-shell-timeout-revert "'.$firefox.' '.$url.'")][firefox open]]';
+  $r.=' [[elisp:(orgcms-shell-timeout-revert "'.$chrome.' '.$url.'")]['.$host.']]';#newTAB chrome新标签页中打开
+  return $r."\n".$v[2]."\n";
+}
+# 反回短的url,长url写入全局变量
+function long_url_to(string $url,int $tabId){
+  global $_urls;
+  if(strlen($url)>99){
+    $_urls[$tabId]=$url;
+    return "http://127.0.0.1/u?u=".$tabId;
+  }else{
+    return $url;
+  }
+}
+#+END_SRC
+* u.php文件
+#+BEGIN_SRC php
+if(isset($_GET["u"])){
+  $arr= json_decode(file_get_contents(__DIR__."/browser-urls.json"),1);
+  if(isset($arr[$_GET["u"]])){
+    #echo "跳转".$arr[$_GET["u"]];
+    header("Location:".$arr[$_GET["u"]]);
+  }else{
+    print_r($arr);
+  }
+}else{ 
+  echo "no get u";
+}
+#+END_SRC
+* elisp orgcms-shell-timeout-revert function
+#+BEGIN_SRC elisp
+(defun orgcms-shell-timeout-revert(shell &optional timeout)
+  "org file click link exec shell command later revert file"
+  (shell-command-to-string shell)
+  (or timeout (setq timeout 2));default 2s
+  (run-with-timer timeout nil
+                  (lambda ()
+                    (revert-buffer nil t) ))
+  )
+#+END_SRC
