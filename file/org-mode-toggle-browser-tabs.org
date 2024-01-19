@@ -68,7 +68,7 @@ if(substr($json,0,2)=="[["){#]]
   file_put_contents(__DIR__."/browser-tabs.org","no post");
 }
 function arr_to_org_link(array $v){
-  $firefox="d:/9/client/firefox/firefox.exe";
+  $firefox="d:/client/firefox/firefox.exe";
   $chrome="\\\"C:/Program Files/Google/Chrome/Application/chrome.exe\\\"";
   $host=explode("//",$v[1],2)[1];
   #$host=explode("/",$host,2)[0];
